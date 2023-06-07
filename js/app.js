@@ -15,8 +15,10 @@ const closeEl = document.getElementById('close')
 
 //check
 
-let todos = JSON.parse(localStorage.getItem('list')) ? JSON.parse(localStorage.getItem('list')) : []
-
+let todos = JSON.parse(localStorage.getItem('list')) 
+? JSON.parse(localStorage.getItem('list')) 
+: [] 
+console.log(todos)
 //todos localstorage
 function settodos() {
     localStorage.setItem('item', JSON.stringify(todos))
@@ -26,6 +28,19 @@ function settodos() {
 
 function showdotos() {
     const todos = JSON.parse(localStorage.getItem('list'))
+            
+        todos.forEach((item, i)=> {
+            listGroupTodo.innerHTML += `
+                <li class="list-group-item d-flex justify-content-between">
+                        ${item.text}
+                        <div class="todo-icons">
+                            <span class="opacity-50 me-2">05.06.2023</span>
+                            <img src="/img/edit.svg" alt="edit icon" width="25" height="25">
+                            <img src="/img/delete.svg" alt="edit icon" width="25" height="25">
+                    </div>
+                </li>
+                `
+    });
 }
 
 
@@ -38,6 +53,15 @@ function showMessage(where, message) {
     }, 2000);
 }
 
+/* <li class="list-group-item d-flex justify-content-between"> hello
+          <div class="todo-icons">
+            <span class="opacity-50 me-2">05.06.2023</span>
+            <img src="/img/edit.svg" alt="edit icon" width="25" height="25">
+            <img src="/img/delete.svg" alt="edit icon" width="25" height="25">
+          </div>
+        </li>
+*/
+
 // get todos
 
 formCreate.addEventListener('submit', (e)=> {
@@ -46,11 +70,8 @@ formCreate.addEventListener('submit', (e)=> {
     formCreate.reset()
     if (todoText.length) {
         todos.push({text: todoText, time: '22:03, 05.06.2023', completed: false })
-        console.log(todos);
         settodos()
     } else {
         showMessage('#message-create', 'Please, enter some word...')
     }
-
-    
 })
